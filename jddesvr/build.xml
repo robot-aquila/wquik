@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jddesvr" default="dist" basedir=".">
+  <property name="package" value="ru.prolib.aquila.jddesvr" />
+  <property name="src" location="java/src" />
+  <property name="bin" location="java/bin" />
+  <property name="build" location="../build" />
+  <property name="docs" location="javadoc" />
+  <property name="code-jar" location="${build}/jddesvr.jar" />
+  <property name="docs-jar" location="${build}/jddesvr-javadoc.jar" />
+  <property name="generate-tstamp" location="${src}/generated.ts" />
+  <property name="swig-file" location="jddesvr.i" />
+
+  <target name="isGenerateReq" >
+    <uptodate srcfile="${swig-file}" targetfile="${generate-tstamp}" property="generate.notReq" />
+  </target>
+  
+  <target name="generate-javacode" depends="init,isGenerateReq" unless="${generate.notReq}">
+    <echo>In order to function correctly, please ensure the following environment variables are correctly set:</echo>
+    <echo>JAVA_INCLUDE: %JAVA_INCLUDE%</echo>
+    <echo>JAVA_BIN: %JAVA_BIN%</echo>
+    <exec executable="swig" failonerror="true">
+      <arg value="-c++" />
+      <arg value="-java" />
+      <arg value="-I../include" />
+      <arg line="-package ${package}" />
+      <arg line="-outdir ${src}/ru/prolib/aquila/jddesvr" />
+      <arg value="${swig-file}" />  
+    </exec>
+    <touch file="${generate-tstamp}" />
+  </target>
+
+  <target name="clean">
+    <delete includeEmptyDirs="true" quiet="yes">
+      <fileset dir="${src}" includes="**/*" />
+      <fileset dir="${bin}" includes="**/*" />
+      <fileset dir="${docs}" includes="**/*" />
+      <file file="${code-jar}" />
+      <file file="${docs-jar}" />
+    </delete>
+  </target>
+	
+  <target name="compile-javadoc" depends="generate-javacode">
+    <delete includeEmptyDirs="true" quiet="yes">
+      <fileset dir="${docs}" includes="**/*" />
+      <file file="${docs-jar}" />      
+    </delete>
+    <javadoc sourcepath="${src}" destdir="${docs}" charset="UTF-8" Encoding="UTF-8">
+      <package name="${package}" />
+    </javadoc>
+  </target>
+
+  <target name="compile-javacode" depends="generate-javacode">
+    <javac srcdir="${src}" destdir="${bin}" encoding="UTF-8" />
+  </target>
+
+  <target name="build-code-jar" depends="compile-javacode">
+    <delete file="${code-jar}" quiet="yes" />
+    <jar destfile="${code-jar}" basedir="${bin}" />
+  </target>
+
+  <target name="build-docs-jar" depends="compile-javadoc">
+    <delete file="${docs-jar}" quiet="yes" />
+    <jar destfile="${docs-jar}" basedir="${docs}" />
+  </target>
+
+  <target name="init">
+    <tstamp />
+    <mkdir dir="${bin}" />
+    <mkdir dir="${src}/ru/prolib/aquila/jddesvr" />
+    <mkdir dir="${docs}" />
+  </target>
+	
+  <target name="dist" depends="build-code-jar,build-docs-jar" />
+
+</project>

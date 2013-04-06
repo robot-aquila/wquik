@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{156D17EA-33D0-4ADC-90A0-25EACEDDF026}</ProjectGuid>
+    <RootNamespace>xltable</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\build\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../build\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\aquila\xltable\Facade.cpp" />
+    <ClCompile Include="..\src\aquila\xltable\xltable-all.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\aquila\xltable\BlockBlank.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockBoolean.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockError.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockFactory.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockFloat.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockInteger.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockRegistry.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockSkip.h" />
+    <ClInclude Include="..\include\aquila\xltable\BlockString.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellAggregator.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellBoolean.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellEmpty.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellFactory.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellFloat.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellInteger.h" />
+    <ClInclude Include="..\include\aquila\xltable\CellString.h" />
+    <ClInclude Include="..\include\aquila\xltable\DataStream.h" />
+    <ClInclude Include="..\include\aquila\xltable\Facade.h" />
+    <ClInclude Include="..\include\aquila\xltable\IBlock.h" />
+    <ClInclude Include="..\include\aquila\xltable\IBlockFactory.h" />
+    <ClInclude Include="..\include\aquila\xltable\ICell.h" />
+    <ClInclude Include="..\include\aquila\xltable\ICellAggregator.h" />
+    <ClInclude Include="..\include\aquila\xltable\ICellFactory.h" />
+    <ClInclude Include="..\include\aquila\xltable\IDataStream.h" />
+    <ClInclude Include="..\include\aquila\xltable\IFacade.h" />
+    <ClInclude Include="..\include\aquila\xltable\ITableRange.h" />
+    <ClInclude Include="..\include\aquila\xltable\TableRange.h" />
+    <ClInclude Include="..\include\aquila\xltable\XltException.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
