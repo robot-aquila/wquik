@@ -54,7 +54,7 @@ public:
 		DWORD dwTransId, double dOrderNum, LPSTR replyMsg)
 	{
 		pHandler->OnTransactionReply(transResult, errCode, replyCode,
-			dwTransId, (unsigned long) dOrderNum,
+			dwTransId, (long long) dOrderNum,
 			replyMsg == 0 ? "" : replyMsg);
 	}
 
@@ -65,7 +65,7 @@ public:
 		QTransOrderStatus arg;
 		arg.mode = mode;
 		arg.transId = transId;
-		arg.orderId = (unsigned long) orderId;
+		arg.orderId = (long long) orderId;
 		arg.classCode = (classCode == 0 ? "" : classCode);
 		arg.secCode = (secCode == 0 ? "" : secCode);
 		arg.price = price;
@@ -83,8 +83,8 @@ public:
 	{
 		QTransTradeStatus arg;
 		arg.mode = mode;
-		arg.id = (unsigned long) dNumber;
-		arg.orderId = (unsigned long) dOrderNum;
+		arg.id = (long long) dNumber;
+		arg.orderId = (long long) dOrderNum;
 		arg.classCode = (classCode == 0 ? "" : classCode);
 		arg.secCode = (secCode == 0 ? "" : secCode);
 		arg.price = price;

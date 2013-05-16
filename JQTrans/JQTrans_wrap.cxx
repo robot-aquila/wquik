@@ -470,7 +470,7 @@ void SwigDirector_JQTransHandler::OnConnectionStatus(long connEvent, long errCod
   if (swigjobj) jenv->DeleteLocalRef(swigjobj);
 }
 
-void SwigDirector_JQTransHandler::OnTransactionReply(long resultCode, long errCode, long replyCode, unsigned long transId, unsigned long orderId, std::string replyMsg) {
+void SwigDirector_JQTransHandler::OnTransactionReply(long resultCode, long errCode, long replyCode, unsigned long transId, long long orderId, std::string replyMsg) {
   JNIEnvWrapper swigjnienv(this) ;
   JNIEnv * jenv = swigjnienv.getJNIEnv() ;
   jobject swigjobj = (jobject) NULL ;
@@ -657,13 +657,13 @@ SWIGEXPORT jlong JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransOrderSta
 
 SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransOrderStatus_1orderId_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   QTransOrderStatus *arg1 = (QTransOrderStatus *) 0 ;
-  unsigned long arg2 ;
+  long long arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(QTransOrderStatus **)&jarg1; 
-  arg2 = (unsigned long)jarg2; 
+  arg2 = (long long)jarg2; 
   if (arg1) (arg1)->orderId = arg2;
 }
 
@@ -671,13 +671,13 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransOrderStat
 SWIGEXPORT jlong JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransOrderStatus_1orderId_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   QTransOrderStatus *arg1 = (QTransOrderStatus *) 0 ;
-  unsigned long result;
+  long long result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(QTransOrderStatus **)&jarg1; 
-  result = (unsigned long) ((arg1)->orderId);
+  result = (long long) ((arg1)->orderId);
   jresult = (jlong)result; 
   return jresult;
 }
@@ -975,13 +975,13 @@ SWIGEXPORT jint JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStat
 
 SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStatus_1id_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   QTransTradeStatus *arg1 = (QTransTradeStatus *) 0 ;
-  unsigned long arg2 ;
+  long long arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(QTransTradeStatus **)&jarg1; 
-  arg2 = (unsigned long)jarg2; 
+  arg2 = (long long)jarg2; 
   if (arg1) (arg1)->id = arg2;
 }
 
@@ -989,13 +989,13 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStat
 SWIGEXPORT jlong JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStatus_1id_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   QTransTradeStatus *arg1 = (QTransTradeStatus *) 0 ;
-  unsigned long result;
+  long long result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(QTransTradeStatus **)&jarg1; 
-  result = (unsigned long) ((arg1)->id);
+  result = (long long) ((arg1)->id);
   jresult = (jlong)result; 
   return jresult;
 }
@@ -1003,13 +1003,13 @@ SWIGEXPORT jlong JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeSta
 
 SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStatus_1orderId_1set(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
   QTransTradeStatus *arg1 = (QTransTradeStatus *) 0 ;
-  unsigned long arg2 ;
+  long long arg2 ;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(QTransTradeStatus **)&jarg1; 
-  arg2 = (unsigned long)jarg2; 
+  arg2 = (long long)jarg2; 
   if (arg1) (arg1)->orderId = arg2;
 }
 
@@ -1017,13 +1017,13 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStat
 SWIGEXPORT jlong JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_QTransTradeStatus_1orderId_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   QTransTradeStatus *arg1 = (QTransTradeStatus *) 0 ;
-  unsigned long result;
+  long long result;
   
   (void)jenv;
   (void)jcls;
   (void)jarg1_;
   arg1 = *(QTransTradeStatus **)&jarg1; 
-  result = (unsigned long) ((arg1)->orderId);
+  result = (long long) ((arg1)->orderId);
   jresult = (jlong)result; 
   return jresult;
 }
@@ -1339,7 +1339,7 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_JQTransHandler_
   long arg3 ;
   long arg4 ;
   unsigned long arg5 ;
-  unsigned long arg6 ;
+  long long arg6 ;
   std::string arg7 ;
   
   (void)jenv;
@@ -1350,7 +1350,7 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_JQTransHandler_
   arg3 = (long)jarg3; 
   arg4 = (long)jarg4; 
   arg5 = (unsigned long)jarg5; 
-  arg6 = (unsigned long)jarg6; 
+  arg6 = (long long)jarg6; 
   if(!jarg7) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
     return ;
@@ -1369,7 +1369,7 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_JQTransHandler_
   long arg3 ;
   long arg4 ;
   unsigned long arg5 ;
-  unsigned long arg6 ;
+  long long arg6 ;
   std::string arg7 ;
   
   (void)jenv;
@@ -1380,7 +1380,7 @@ SWIGEXPORT void JNICALL Java_ru_prolib_aquila_JQTrans_JQTransJNI_JQTransHandler_
   arg3 = (long)jarg3; 
   arg4 = (long)jarg4; 
   arg5 = (unsigned long)jarg5; 
-  arg6 = (unsigned long)jarg6; 
+  arg6 = (long long)jarg6; 
   if(!jarg7) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
     return ;

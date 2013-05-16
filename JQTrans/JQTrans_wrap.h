@@ -18,7 +18,7 @@ public:
     SwigDirector_JQTransHandler(JNIEnv *jenv);
     virtual ~SwigDirector_JQTransHandler();
     virtual void OnConnectionStatus(long connEvent, long errCode, std::string errMsg);
-    virtual void OnTransactionReply(long resultCode, long errCode, long replyCode, unsigned long transId, unsigned long orderId, std::string replyMsg);
+    virtual void OnTransactionReply(long resultCode, long errCode, long replyCode, unsigned long transId, long long orderId, std::string replyMsg);
     virtual void OnOrderStatus(QTransOrderStatus &status);
     virtual void OnTradeStatus(QTransTradeStatus &status);
 public:

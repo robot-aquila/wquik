@@ -13,7 +13,7 @@ using namespace std;
 struct QTransOrderStatus {
 	long mode;
 	unsigned long transId;
-	unsigned long orderId;
+	long long orderId;
 	string classCode;
 	string secCode;
 	double price;
@@ -26,8 +26,8 @@ struct QTransOrderStatus {
 
 struct QTransTradeStatus {
 	long mode;
-	unsigned long id;
-	unsigned long orderId;
+	long long id;
+	long long orderId;
 	string classCode;
 	string secCode;
 	double price;

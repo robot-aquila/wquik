@@ -30,7 +30,7 @@ public:
 	}
 
 	virtual void OnTransactionReply(long resultCode, long errCode,
-		long replyCode, unsigned long transId, unsigned long orderId,
+		long replyCode, unsigned long transId, long long orderId,
 		std::string replyMsg)
 	{
 		printf("JQTransHandler::OnTransactionReply native stub\n");

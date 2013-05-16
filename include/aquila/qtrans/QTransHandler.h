@@ -25,7 +25,7 @@ public:
 		OnConnectionStatus(long connEvent, long errCode, string errMsg) { }
 
 	virtual void OnTransactionReply(long resultCode, long errCode,
-		long replyCode, unsigned long transId, unsigned long orderId,
+		long replyCode, unsigned long transId, long long orderId,
 		string replyMsg) { }
 
 	virtual void OnOrderStatus(QTransOrderStatus& status) { }
