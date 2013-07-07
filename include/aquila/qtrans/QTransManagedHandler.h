@@ -31,6 +31,24 @@ public delegate void OrderStatusDlg(long, DWORD, double, LPSTR, LPSTR,
 public delegate void TradeStatusDlg(long, double, double, LPSTR, LPSTR,
 	double, long, double, long, long);
 
+#ifdef _DUMP_HANDLE_TIME
+#pragma message("Enable handle time dumping")
+static LARGE_INTEGER timerFreqMu;
+
+#define _DUMP_HANDLE_TIME_BEG \
+		LARGE_INTEGER beg, end; \
+		QueryPerformanceCounter(&beg);
+
+#define _DUMP_HANDLE_TIME_END(name) QueryPerformanceCounter(&end); \
+		printf("%s: %d\n", name, (end.QuadPart - beg.QuadPart) / timerFreqMu.QuadPart);
+
+#else
+#define _DUMP_HANDLE_TIME_BEG
+#define _DUMP_HANDLE_TIME_END(name)
+#endif
+
+
+
 public ref class QTransManagedHandler {
 public:
 	QTransManagedHandler(QTransHandler* handler) {
@@ -39,6 +57,13 @@ public:
 		dTransReply = gcnew TransReplyDlg(this, &QTransManagedHandler::OnTransactionReply);
 		dOrderStatus = gcnew OrderStatusDlg(this, &QTransManagedHandler::OnOrderStatus);
 		dTradeStatus = gcnew TradeStatusDlg(this, &QTransManagedHandler::OnTradeStatus);
+#ifdef _DUMP_HANDLE_TIME
+		if ( QueryPerformanceFrequency(&timerFreqMu) ) {
+			timerFreqMu.QuadPart /= 1000000;
+		} else {
+			timerFreqMu.QuadPart = -1;
+		}
+#endif
 	}
 
 	virtual ~QTransManagedHandler() {
@@ -46,22 +71,27 @@ public:
 	}
 
 	void OnConnectionStatus(long connEvent, long errCode, LPSTR lpstr) {
+		_DUMP_HANDLE_TIME_BEG
 		pHandler->OnConnectionStatus(connEvent, errCode,
 			lpstr == 0 ? "" : lpstr);
+		_DUMP_HANDLE_TIME_END("OnConnectionStatus");
 	}
 
 	void OnTransactionReply(long transResult, long errCode, long replyCode,
 		DWORD dwTransId, double dOrderNum, LPSTR replyMsg)
 	{
+		_DUMP_HANDLE_TIME_BEG
 		pHandler->OnTransactionReply(transResult, errCode, replyCode,
 			dwTransId, (long long) dOrderNum,
 			replyMsg == 0 ? "" : replyMsg);
+		_DUMP_HANDLE_TIME_END("OnTransactionReply");
 	}
 
 	void OnOrderStatus(long mode, DWORD transId, double orderId,
 		LPSTR classCode, LPSTR secCode, double price, long balance,
 		double value, long isSell, long status, long orderDescriptor)
 	{
+		_DUMP_HANDLE_TIME_BEG
 		QTransOrderStatus arg;
 		arg.mode = mode;
 		arg.transId = transId;
@@ -75,12 +105,14 @@ public:
 		arg.status = status;
 		arg.orderDescriptor = orderDescriptor;
 		pHandler->OnOrderStatus(arg);
+		_DUMP_HANDLE_TIME_END("OnOrderStatus");
 	}
 
 	void OnTradeStatus(long mode, double dNumber, double dOrderNum,
 		LPSTR classCode, LPSTR secCode, double price, long qty,
 		double value, long isSell, long tradeDescriptor)
 	{
+		_DUMP_HANDLE_TIME_BEG
 		QTransTradeStatus arg;
 		arg.mode = mode;
 		arg.id = (long long) dNumber;
@@ -93,6 +125,7 @@ public:
 		arg.isSell = (isSell == 1 ? true : false);
 		arg.tradeDescriptor = tradeDescriptor;
 		pHandler->OnTradeStatus(arg);
+		_DUMP_HANDLE_TIME_END("OnTradeStatus");
 	}
 
 	/**
@@ -141,6 +174,7 @@ private:
 	TransReplyDlg^ dTransReply;
 	OrderStatusDlg^ dOrderStatus;
 	TradeStatusDlg^ dTradeStatus;
+
 };
 
 	} // end namespace qtrans
