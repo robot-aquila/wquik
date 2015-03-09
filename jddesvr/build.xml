@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="jddesvr" default="dist" basedir=".">
+<project name="jddesvr" default="dist" >
   <property name="package" value="ru.prolib.aquila.jddesvr" />
   <property name="src" location="java/src" />
   <property name="bin" location="java/bin" />
@@ -24,13 +24,14 @@
       <arg value="-I../include" />
       <arg line="-package ${package}" />
       <arg line="-outdir ${src}/ru/prolib/aquila/jddesvr" />
+      <arg line="-o jddesvr_wrap.cxx" />
       <arg value="${swig-file}" />  
     </exec>
     <touch file="${generate-tstamp}" />
   </target>
 
   <target name="clean">
-    <delete includeEmptyDirs="true" quiet="yes">
+    <delete includeEmptyDirs="true" verbose="yes">
       <fileset dir="${src}" includes="**/*" />
       <fileset dir="${bin}" includes="**/*" />
       <fileset dir="${docs}" includes="**/*" />

@@ -18,12 +18,13 @@
       <arg value="-I../include" />
       <arg line="-package ${package}" />
       <arg line="-outdir ${src}/ru/prolib/aquila/JQTrans" />
+      <arg line="-o JQTrans_wrap.cxx" />
       <arg value="JQTrans.i" />
     </exec>
   </target>
-
+  
   <target name="clean-java">
-    <delete includeEmptyDirs="true" quiet="yes">
+    <delete includeEmptyDirs="true" verbose="yes">
       <fileset dir="${src}" includes="**/*" />
       <fileset dir="${bin}" includes="**/*" />
       <file file="${code-jar}" />
@@ -31,7 +32,7 @@
   </target>
 
   <target name="clean-docs">
-    <delete includeEmptyDirs="true" quiet="yes" >
+    <delete includeEmptyDirs="true" verbose="yes" >
       <fileset dir="${docs}" includes="**/*" />
       <file file="${docs-jar}" />
     </delete>
