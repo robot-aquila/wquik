@@ -51,7 +51,11 @@
     <ant dir="jddesvr" target="install" inheritAll="false" />
   </target>
 
-  <target name="install" depends="install-jddesvr" />
+  <target name="install-JQTrans">
+    <ant dir="JQTrans" target="install" inheritAll="false" />
+  </target>
+
+  <target name="install" depends="install-jddesvr,install-JQTrans" />
 	
   <target name="clean" depends="clean-solution,clean-jddesvr,clean-jqtrans" />
   

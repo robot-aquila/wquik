@@ -1,5 +1,4 @@
-javadoc/
-java/
 jddesvr_wrap.h
 jddesvr_wrap.cxx
 target/
+src/

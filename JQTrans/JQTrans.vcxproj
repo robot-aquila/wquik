@@ -94,7 +94,7 @@
   <ItemGroup>
     <None Include="build.xml" />
     <CustomBuild Include="JQTrans.i">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ant
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ant generate-code
 </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">JQTrans_wrap.cxx;%(Outputs)</Outputs>
     </CustomBuild>

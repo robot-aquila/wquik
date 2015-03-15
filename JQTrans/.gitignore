@@ -1,4 +1,4 @@
-javadoc/
-java/
 JQTrans_wrap.cxx
 JQTrans_wrap.h
+target/
+src/

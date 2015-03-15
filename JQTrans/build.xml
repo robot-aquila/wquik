@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="JQTrans" default="dist" basedir=".">
   <property name="package" value="ru.prolib.aquila.JQTrans" />
-  <property name="src" location="java/src" />
-  <property name="bin" location="java/bin" />
-  <property name="build" location="../build" />
-  <property name="docs" location="javadoc" />
-  <property name="code-jar" location="${build}/JQTrans.jar" />
-  <property name="docs-jar" location="${build}/JQTrans-javadoc.jar" />
+  <property name="src" location="src/main/java" />
+  <property name="generate-tstamp" location="${src}/generated.ts" />
+  <property name="swig-file" location="JQtrans.i" />
+  <property name="package-dll" location="../build/JQTrans.dll" />
+  <property name="trans2quik-dll" location="../build/TRANS2QUIK.dll" />
 
-  <target name="generate-javacode" depends="init">
+  <target name="isGenerateReq" >
+    <uptodate srcfile="${swig-file}" targetfile="${generate-tstamp}" property="generate.notReq" />
+  </target>
+
+  <target name="generate-code" depends="init,isGenerateReq" unless="${generate.notReq}">
     <echo>In order to function correctly, please ensure the following environment variables are correctly set:</echo>
     <echo>JAVA_INCLUDE: %JAVA_INCLUDE%</echo>
     <echo>JAVA_BIN: %JAVA_BIN%</echo>
@@ -19,54 +22,50 @@
       <arg line="-package ${package}" />
       <arg line="-outdir ${src}/ru/prolib/aquila/JQTrans" />
       <arg line="-o JQTrans_wrap.cxx" />
-      <arg value="JQTrans.i" />
+      <arg value="${swig-file}" />
     </exec>
   </target>
-  
-  <target name="clean-java">
+
+  <target name="install-package" depends="generate-code">
+    <exec executable="mvn.bat" failonerror="true">
+      <arg value="install" />
+    </exec>
+  </target>
+
+  <target name="install-runtime">
+    <exec executable="mvn.bat">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib" />
+      <arg value="-DartifactId=aquila-JQTrans-win-x86" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=dll" />
+      <arg value="-Dfile=${package-dll}" />
+    </exec>
+    <exec executable="mvn.bat">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib" />
+      <arg value="-DartifactId=aquila-TRANS2QUIK-win-x86" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=dll" />
+      <arg value="-Dfile=${trans2quik-dll}" />
+    </exec>
+  </target>
+
+  <target name="install" depends="install-package,install-runtime" />
+
+  <target name="clean" depends="init">
     <delete includeEmptyDirs="true" verbose="yes">
       <fileset dir="${src}" includes="**/*" />
-      <fileset dir="${bin}" includes="**/*" />
-      <file file="${code-jar}" />
+      <file file="JQTrans_wrap.cxx" />
+      <file file="JQTrans_wrap.h" />
     </delete>
   </target>
 
-  <target name="clean-docs">
-    <delete includeEmptyDirs="true" verbose="yes" >
-      <fileset dir="${docs}" includes="**/*" />
-      <file file="${docs-jar}" />
-    </delete>
-  </target>
-
-  <target name="clean" depends="clean-java,clean-docs" />
-
-  <target name="compile-javadoc" depends="init,clean-docs,generate-javacode">
-    <javadoc sourcepath="${src}" destdir="${docs}" charset="UTF-8" Encoding="UTF-8">
-      <package name="${package}" />
-    </javadoc>
-  </target>
-
-  <target name="compile-javacode" depends="generate-javacode">
-    <javac srcdir="${src}" destdir="${bin}" encoding="UTF-8" />
-  </target>
-
-  <target name="build-code-jar" depends="compile-javacode">
-    <delete file="${code-jar}" quiet="yes" />
-    <jar destfile="${code-jar}" basedir="${bin}" />
-  </target>
-
-  <target name="build-docs-jar" depends="compile-javadoc">
-    <delete file="${docs-jar}" quiet="yes" />
-    <jar destfile="${docs-jar}" basedir="${docs}" />
-  </target>
-
-  <target name="init" depends="clean">
+  <target name="init" >
     <tstamp />
-    <mkdir dir="${bin}" />
     <mkdir dir="${src}/ru/prolib/aquila/JQTrans" />
-    <mkdir dir="${docs}" />
   </target>
 
-  <target name="dist" depends="build-code-jar,build-docs-jar" />
+  <target name="dist" depends="install" />
 
 </project>

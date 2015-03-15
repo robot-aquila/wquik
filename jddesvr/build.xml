@@ -45,7 +45,7 @@
 
   <target name="install" depends="install-package,install-runtime" />
 
-  <target name="clean">
+  <target name="clean" depends="init">
     <delete includeEmptyDirs="true" verbose="yes">
       <fileset dir="${src}" includes="**/*" />
       <file file="jddesvr_wrap.cxx" />
