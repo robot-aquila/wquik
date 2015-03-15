@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="jddesvr" default="dist" >
   <property name="package" value="ru.prolib.aquila.jddesvr" />
-  <property name="src" location="java/src" />
-  <property name="bin" location="java/bin" />
-  <property name="build" location="../build" />
-  <property name="docs" location="javadoc" />
-  <property name="code-jar" location="${build}/jddesvr.jar" />
-  <property name="docs-jar" location="${build}/jddesvr-javadoc.jar" />
+  <property name="src" location="src/main/java" />
   <property name="generate-tstamp" location="${src}/generated.ts" />
   <property name="swig-file" location="jddesvr.i" />
+  <property name="package-dll" location="../build/jddesvr.dll" />
 
   <target name="isGenerateReq" >
     <uptodate srcfile="${swig-file}" targetfile="${generate-tstamp}" property="generate.notReq" />
   </target>
   
-  <target name="generate-javacode" depends="init,isGenerateReq" unless="${generate.notReq}">
+  <target name="generate-code" depends="init,isGenerateReq" unless="${generate.notReq}">
     <echo>In order to function correctly, please ensure the following environment variables are correctly set:</echo>
     <echo>JAVA_INCLUDE: %JAVA_INCLUDE%</echo>
     <echo>JAVA_BIN: %JAVA_BIN%</echo>
@@ -30,47 +26,38 @@
     <touch file="${generate-tstamp}" />
   </target>
 
+  <target name="install-package" depends="generate-code">
+    <exec executable="mvn.bat" failonerror="true">
+      <arg value="install" />
+    </exec>
+  </target>
+
+  <target name="install-runtime">
+    <exec executable="mvn.bat">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib" />
+      <arg value="-DartifactId=aquila-jddesvr-win-x86" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=dll" />
+      <arg value="-Dfile=${package-dll}" />
+    </exec>
+  </target>
+
+  <target name="install" depends="install-package,install-runtime" />
+
   <target name="clean">
     <delete includeEmptyDirs="true" verbose="yes">
       <fileset dir="${src}" includes="**/*" />
-      <fileset dir="${bin}" includes="**/*" />
-      <fileset dir="${docs}" includes="**/*" />
-      <file file="${code-jar}" />
-      <file file="${docs-jar}" />
+      <file file="jddesvr_wrap.cxx" />
+      <file file="jddesvr_wrap.h" />
     </delete>
-  </target>
-	
-  <target name="compile-javadoc" depends="generate-javacode">
-    <delete includeEmptyDirs="true" quiet="yes">
-      <fileset dir="${docs}" includes="**/*" />
-      <file file="${docs-jar}" />      
-    </delete>
-    <javadoc sourcepath="${src}" destdir="${docs}" charset="UTF-8" Encoding="UTF-8">
-      <package name="${package}" />
-    </javadoc>
-  </target>
-
-  <target name="compile-javacode" depends="generate-javacode">
-    <javac srcdir="${src}" destdir="${bin}" encoding="UTF-8" />
-  </target>
-
-  <target name="build-code-jar" depends="compile-javacode">
-    <delete file="${code-jar}" quiet="yes" />
-    <jar destfile="${code-jar}" basedir="${bin}" />
-  </target>
-
-  <target name="build-docs-jar" depends="compile-javadoc">
-    <delete file="${docs-jar}" quiet="yes" />
-    <jar destfile="${docs-jar}" basedir="${docs}" />
   </target>
 
   <target name="init">
     <tstamp />
-    <mkdir dir="${bin}" />
     <mkdir dir="${src}/ru/prolib/aquila/jddesvr" />
-    <mkdir dir="${docs}" />
   </target>
-	
-  <target name="dist" depends="build-code-jar,build-docs-jar" />
+
+  <target name="dist" depends="install" />
 
 </project>

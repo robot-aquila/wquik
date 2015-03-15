@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="wquik" default="dist" >
   <property name="build" location="build" />
-  
+
+  <target name="init" />
+
   <target name="build-solution" depends="init">
     <exec executable="MSBuild.exe" failonerror="true">
       <arg value="WQuik.sln" />
@@ -18,38 +20,43 @@
       <arg value="/property:Configuration=Release" />
   	</exec>
   </target>
-
-  <!--target name="build-jddesvr">
-  	<ant dir="jddesvr"/>
-  </target-->
-	
-  <!--target name="build-jddesvr">
-  	<ant dir="JQTrans"/>
-  </target-->
 	
   <target name="clean-jddesvr">
   	<ant dir="jddesvr" target="clean" inheritAll="false" />
   </target>
 	
   <target name="clean-jqtrans">
-	<ant dir="JQTrans" target="clean" inheritAll="false" />
+	  <ant dir="JQTrans" target="clean" inheritAll="false" />
   </target>
 
-  <target name="run-tests">
-	<echo message="Run all tests" />
-	<echo message="Run core.Tests.exe" />
-	<exec dir="${build}" executable="${build}/core.Tests.exe" failonerror="yes" />
-	<echo message="Run dde.Tests.exe" />
-	<exec dir="${build}" executable="${build}/dde.Tests.exe" failonerror="yes" />
-	<echo message="Run ddesvr.Tests.exe" />
-	<exec dir="${build}" executable="${build}/ddesvr.Tests.exe" failonerror="yes" />
-	<echo message="Run xltable.Tests.exe" />
-	<exec dir="${build}" executable="${build}/xltable.Tests.exe" failonerror="yes" />
+  <target name="test-core" >
+    <exec dir="${build}" executable="${build}/core.Tests.exe" failonerror="yes" />    
   </target>
+
+  <target name="test-dde" >
+    <exec dir="${build}" executable="${build}/dde.Tests.exe" failonerror="yes" />    
+  </target>
+
+  <target name="test-ddesvr" >
+    <exec dir="${build}" executable="${build}/ddesvr.Tests.exe" failonerror="yes" />    
+  </target>
+
+  <target name="test-xltable" >
+    <exec dir="${build}" executable="${build}/xltable.Tests.exe" failonerror="yes" />
+  </target>
+
+  <target name="test" depends="test-core,test-dde,test-ddesvr,test-xltable" />
+
+  <target name="install-jddesvr">
+    <ant dir="jddesvr" target="install" inheritAll="false" />
+  </target>
+
+  <target name="install" depends="install-jddesvr" />
 	
   <target name="clean" depends="clean-solution,clean-jddesvr,clean-jqtrans" />
-  <target name="init" />
-  <target name="build" depends="build-solution,run-tests" />
-  <target name="dist" depends="build" />
+  
+  <target name="build" depends="build-solution" />
+  
+  <target name="dist" depends="build,test,install" />
 
 </project>

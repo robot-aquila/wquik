@@ -98,7 +98,7 @@
   <ItemGroup>
     <None Include="build.xml" />
     <CustomBuild Include="jddesvr.i">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ant</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ant generate-code</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename)_wrap.cxx;%(Outputs)</Outputs>
     </CustomBuild>
