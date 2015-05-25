@@ -35,7 +35,7 @@
   <target name="install-runtime">
     <exec executable="mvn.bat">
       <arg value="install:install-file" />
-      <arg value="-DgroupId=ru.prolib" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
       <arg value="-DartifactId=aquila-JQTrans-win-x86" />
       <arg value="-Dversion=1.0" />
       <arg value="-Dpackaging=dll" />
@@ -43,7 +43,7 @@
     </exec>
     <exec executable="mvn.bat">
       <arg value="install:install-file" />
-      <arg value="-DgroupId=ru.prolib" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
       <arg value="-DartifactId=aquila-TRANS2QUIK-win-x86" />
       <arg value="-Dversion=1.0" />
       <arg value="-Dpackaging=dll" />

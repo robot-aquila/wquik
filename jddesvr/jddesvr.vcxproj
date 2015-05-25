@@ -103,6 +103,7 @@
       </AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">jddesvr_wrap.cxx;%(Outputs)</Outputs>
     </CustomBuild>
+    <None Include="pom.xml" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

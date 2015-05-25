@@ -33,6 +33,7 @@
   <ItemGroup>
     <None Include="build.xml" />
     <None Include="ReadMe.txt" />
+    <None Include="pom.xml" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="JQTrans.i" />
