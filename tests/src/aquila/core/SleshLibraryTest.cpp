@@ -47,6 +47,17 @@ TEST_F(SleshLibraryTest, testConstructor_Ok) {
 	}
 }
 
+TEST_F(SleshLibraryTest, testDllMainIsCalled) {
+	try {
+		auto_drop<SleshLibrary> lib(new SleshLibrary("core.TestDll.dll"));
+		getSum* getSumPtr = (getSum*)lib->getProcAddress(FUNCTION_NAME_getSum);
+		ASSERT_EQ(TEST_PROCESS_ATTACH_MARKER, (*getSumPtr)(0));
+	}
+	catch (...) {
+		FAIL() << "Uncaught exception";
+	}
+}
+
 TEST_F(SleshLibraryTest, testGetProcAddress) {
 	try {
 		auto_drop<SleshLibrary> lib(new SleshLibrary("core.TestDll.dll"));

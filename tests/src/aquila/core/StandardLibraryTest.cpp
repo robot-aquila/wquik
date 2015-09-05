@@ -67,6 +67,17 @@ TEST_F(StandardLibraryTest, testGetProcAddress) {
 	}
 }
 
+TEST_F(StandardLibraryTest, testDllMainIsCalled) {
+	try {
+		auto_drop<StandardLibrary> lib(new StandardLibrary("core.TestDll.dll"));
+		getSum* getSumPtr = (getSum*)lib->getProcAddress(FUNCTION_NAME_getSum);
+		ASSERT_EQ(TEST_PROCESS_ATTACH_MARKER, (*getSumPtr)(0));
+	}
+	catch (...) {
+		FAIL() << "Uncaught exception";
+	}
+}
+
 TEST_F(StandardLibraryTest, testFunctionsOfDifferentInstances) {
 	// разные экземпл€ры расположены в одном адресном пространстве,
 	// по этому данные внутри них пересекаютс€.

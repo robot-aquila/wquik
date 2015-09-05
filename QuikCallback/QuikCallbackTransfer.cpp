@@ -1,4 +1,7 @@
 #include "QuikCallbackTransfer.h"
+#include "aquila/core/WinApi.h"
+#include "aquila/core/Lock.h"
+#include "aquila/core/CriticalSection.h"
 
 static wquik::IQuikCallbackHandler* handler = NULL;
 
