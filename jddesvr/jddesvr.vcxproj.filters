@@ -40,6 +40,7 @@
     <None Include="build.xml" />
     <None Include="ReadMe.txt" />
     <None Include="pom.xml" />
+    <None Include="jddesvr-maven-artifacts.xml" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="jddesvr.i" />
