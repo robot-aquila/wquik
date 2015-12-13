@@ -4,7 +4,7 @@
   <property name="src" location="src/main/java" />
   <property name="generate-tstamp" location="${src}/generated.ts" />
   <property name="swig-file" location="jddesvr.i" />
-  <property name="package-dll" location="../build/jddesvr.dll" />
+  <property name="mobile-package" value="../build/jddesvr4maven.zip" />
 
   <target name="isGenerateReq" >
     <uptodate srcfile="${swig-file}" targetfile="${generate-tstamp}" property="generate.notReq" />
@@ -27,23 +27,24 @@
   </target>
 
   <target name="install-package" depends="generate-code">
-    <exec executable="mvn.bat" failonerror="true">
-      <arg value="install" />
+    <exec executable="mvn.cmd" failonerror="true">
+      <arg value="package" />
     </exec>
   </target>
 
   <target name="install-runtime">
-    <exec executable="mvn.bat">
-      <arg value="install:install-file" />
-      <arg value="-DgroupId=ru.prolib.aquila" />
-      <arg value="-DartifactId=aquila-jddesvr-win-x86" />
-      <arg value="-Dversion=1.0" />
-      <arg value="-Dpackaging=dll" />
-      <arg value="-Dfile=${package-dll}" />
-    </exec>
+    <!-- ant antfile="jddesvr-maven-artifacts.xml" target="install-runtime"/ -->
   </target>
 
-  <target name="install" depends="install-package,install-runtime" />
+  <target name="build-mobile-package">
+    <zip destfile="${mobile-package}">
+      <zipfileset dir="." includes="jddesvr-maven-artifacts.xml" prefix="jddesvr4maven" />
+      <zipfileset dir="target" includes="aquila-jddesvr-1.0.jar" prefix="jddesvr4maven" />
+      <zipfileset dir="../build" includes="jddesvr.dll" prefix="jddesvr4maven" />
+    </zip>
+  </target>
+
+  <target name="install" depends="install-package,install-runtime,build-mobile-package" />
 
   <target name="clean" depends="init">
     <delete includeEmptyDirs="true" verbose="yes">
@@ -51,6 +52,10 @@
       <file file="jddesvr_wrap.cxx" />
       <file file="jddesvr_wrap.h" />
     </delete>
+    <delete file="${mobile-package}" quiet="true" />
+    <exec executable="mvn.cmd" failonerror="true" >
+      <arg value="clean" />
+    </exec>
   </target>
 
   <target name="init">

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="jddesvr-maven-artfacts" default="dist" >
+  <property name="maven" value="mvn.cmd" />
+  <property name="package-dll" location="jddesvr.dll" />
+  <property name="package-jar" location="aquila-jddesvr-1.0.jar" />
+
+  <target name="install-runtime">
+    <exec executable="${maven}" failonerror="true">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
+      <arg value="-DartifactId=aquila-jddesvr-win-x86" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=dll" />
+      <arg value="-Dfile=${package-dll}" />
+    </exec>
+  </target>
+
+  <target name="install-package">
+    <exec executable="${maven}" failonerror="true">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
+      <arg value="-DartifactId=aquila-jddesvr" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=jar" />
+      <arg value="-Dfile=${package-jar}" />
+    </exec>
+  </target>
+
+  <target name="dist" depends="install-package,install-runtime" />
+
+</project>

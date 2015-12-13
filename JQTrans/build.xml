@@ -4,8 +4,7 @@
   <property name="src" location="src/main/java" />
   <property name="generate-tstamp" location="${src}/generated.ts" />
   <property name="swig-file" location="JQtrans.i" />
-  <property name="package-dll" location="../build/JQTrans.dll" />
-  <property name="trans2quik-dll" location="../build/TRANS2QUIK.dll" />
+  <property name="mobile-package" value="../build/JQTrans4maven.zip" />
 
   <target name="isGenerateReq" >
     <uptodate srcfile="${swig-file}" targetfile="${generate-tstamp}" property="generate.notReq" />
@@ -27,31 +26,25 @@
   </target>
 
   <target name="install-package" depends="generate-code">
-    <exec executable="mvn.bat" failonerror="true">
-      <arg value="install" />
+    <exec executable="mvn.cmd" failonerror="true">
+      <arg value="package" />
     </exec>
   </target>
 
   <target name="install-runtime">
-    <exec executable="mvn.bat">
-      <arg value="install:install-file" />
-      <arg value="-DgroupId=ru.prolib.aquila" />
-      <arg value="-DartifactId=aquila-JQTrans-win-x86" />
-      <arg value="-Dversion=1.0" />
-      <arg value="-Dpackaging=dll" />
-      <arg value="-Dfile=${package-dll}" />
-    </exec>
-    <exec executable="mvn.bat">
-      <arg value="install:install-file" />
-      <arg value="-DgroupId=ru.prolib.aquila" />
-      <arg value="-DartifactId=aquila-TRANS2QUIK-win-x86" />
-      <arg value="-Dversion=1.0" />
-      <arg value="-Dpackaging=dll" />
-      <arg value="-Dfile=${trans2quik-dll}" />
-    </exec>
+    <!-- ant antfile="JQTrans-maven-artifacts.xml" target="install-runtime"/ -->
   </target>
 
-  <target name="install" depends="install-package,install-runtime" />
+  <target name="build-mobile-package">
+    <zip destfile="${mobile-package}">
+      <zipfileset dir="." includes="JQTrans-maven-artifacts.xml" prefix="JQTrans4maven" />
+      <zipfileset dir="target" includes="aquila-JQTrans-1.0.jar" prefix="JQTrans4maven" />
+      <zipfileset dir="../build" includes="JQTrans.dll" prefix="JQTrans4maven" />
+      <zipfileset dir="../build" includes="TRANS2QUIK.dll" prefix="JQTrans4maven" />
+    </zip>
+  </target>
+
+  <target name="install" depends="install-package,install-runtime,build-mobile-package" />
 
   <target name="clean" depends="init">
     <delete includeEmptyDirs="true" verbose="yes">
@@ -59,6 +52,10 @@
       <file file="JQTrans_wrap.cxx" />
       <file file="JQTrans_wrap.h" />
     </delete>
+    <delete file="${mobile-package}" quiet="true" />
+    <exec executable="mvn.cmd" failonerror="true" >
+      <arg value="clean" />
+    </exec>
   </target>
 
   <target name="init" >

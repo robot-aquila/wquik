@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="JQTrans-maven-artfacts" default="dist" >
+  <property name="maven" value="mvn.cmd" />
+  <property name="package-dll" location="JQTrans.dll" />
+  <property name="package-jar" location="aquila-JQTrans-1.0.jar" />
+  <property name="trans2quik-dll" location="TRANS2QUIK.dll" />
+
+  <target name="install-runtime">
+    <exec executable="mvn.cmd" failonerror="true">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
+      <arg value="-DartifactId=aquila-JQTrans-win-x86" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=dll" />
+      <arg value="-Dfile=${package-dll}" />
+    </exec>
+    <exec executable="mvn.cmd" failonerror="true">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
+      <arg value="-DartifactId=aquila-TRANS2QUIK-win-x86" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=dll" />
+      <arg value="-Dfile=${trans2quik-dll}" />
+    </exec>
+  </target>
+
+  <target name="install-package">
+    <exec executable="${maven}" failonerror="true">
+      <arg value="install:install-file" />
+      <arg value="-DgroupId=ru.prolib.aquila" />
+      <arg value="-DartifactId=aquila-JQTrans" />
+      <arg value="-Dversion=1.0" />
+      <arg value="-Dpackaging=jar" />
+      <arg value="-Dfile=${package-jar}" />
+    </exec>
+  </target>
+
+  <target name="dist" depends="install-package,install-runtime" />
+
+</project>
